@@ -1,0 +1,61 @@
+---
+
+elasticsearch_docker_image: elasticsearch
+elasticsearch_docker_tag: 7.9.0
+
+elasticsearch_docker_api_version: 1.26
+elasticsearch_docker_container_user_uid: 1000
+elasticsearch_docker_container_group_uid: 1000
+elasticsearch_docker_container_memory: 4096
+elasticsearch_docker_container_cpu_period: 100000
+elasticsearch_docker_container_cpu_quota: 0
+elasticsearch_docker_container_cpu_count: 1
+
+elasticsearch_cluster_name: clustermicro
+elasticsearch_cluster_check: False
+elasticsearch_cluster_network_addresses: []
+elasticsearch_cluster_hostnames: []
+
+elasticsearch_security_enabled: true
+elasticsearch_security_bootstrap_password: 3l4st1sT4ckb00tstr4p
+elasticsearch_security_ldap_enabled: false
+elasticsearch_security_transport_enabled: true
+elasticsearch_security_http_enabled: true
+elasticsearch_security_auth_ldap_hosts: []
+elasticsearch_security_auth_ldap_base_dn: "o=dummy"
+elasticsearch_security_auth_ldap_role_mapping_unmapped_groups_as_roles: 'false'
+elasticsearch_security_auth_ldap_role_mapping_file: /usr/share/elasticsearch/config/role_mapping.yml
+elasticsearch_security_truststore_enabled: false
+
+elasticsearch_notification_mail_server: mailhost.hi.inet
+elasticsearch_data_dir: /var/dockershared/elasticsearch/data
+elasticsearch_config_dir: /var/dockershared/elasticsearch/config
+elasticsearch_snapshot_dir_host: /var/dockershared/elasticsearch/snapshots
+elasticsearch_snapshot_dir_dest: /snapshots
+
+elasticsearch_network_port: 9200
+
+elasticsearch_license_enabled: false 
+
+elasticsearch_certificate_local_dir: certificates
+elasticsearch_certificate_dir: /var/dockershared/elasticsearch/certs
+elasticsearch_certificate_ca_file_key: ESca.key
+elasticsearch_certificate_ca_file_ingest: ESca.crt
+elasticsearch_certificate_ca_file_monitoring: ESMONca.crt
+elasticsearch_certificate_instance_file_key: instance.key 
+elasticsearch_certificate_instance_file_csr: instance.csr
+elasticsearch_certificate_instance_file_crt: instance.crt
+
+elasticsearch_force_keystore_create: false
+
+elasticsearch_monitoring_enabled: false
+elasticsearch_monitoring_hosts: []
+elasticsearch_metricbeat_monitoring_enabled: false
+
+elasticsearch_index_unassigned_node_left_delayed_timeout: 5m
+
+elasticsearch_cluster_info_update_interval: 1m
+elasticsearch_cluster_routing_allocation_disk_threshold_enabled: true
+elasticsearch_cluster_routing_allocation_disk_watermark_low: 85%
+elasticsearch_cluster_routing_allocation_disk_watermark_high: 90%
+elasticsearch_cluster_routing_allocation_disk_watermark_flood: 95%
