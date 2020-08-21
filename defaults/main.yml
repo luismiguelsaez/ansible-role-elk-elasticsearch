@@ -16,15 +16,15 @@ elasticsearch_docker_container_cpu_quota: 0
 elasticsearch_docker_container_cpu_count: 1
 
 elasticsearch_cluster_name: clustermicro
-elasticsearch_cluster_check: False
+elasticsearch_cluster_check: false
 elasticsearch_cluster_network_addresses: []
 elasticsearch_cluster_hostnames: []
 
-elasticsearch_security_enabled: true
+elasticsearch_security_enabled: false
 elasticsearch_security_bootstrap_password: 3l4st1sT4ckb00tstr4p
 elasticsearch_security_ldap_enabled: false
-elasticsearch_security_transport_enabled: true
-elasticsearch_security_http_enabled: true
+elasticsearch_security_transport_enabled: false
+elasticsearch_security_http_enabled: false
 elasticsearch_security_auth_ldap_hosts: []
 elasticsearch_security_auth_ldap_base_dn: "o=dummy"
 elasticsearch_security_auth_ldap_role_mapping_unmapped_groups_as_roles: 'false'
