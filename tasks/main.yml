@@ -18,7 +18,7 @@
 - name: Allow elasticsearch memory lock
   copy:
     dest: /etc/security/limits.d/21-elasticsearch.conf
-    content:
+    content: |
       elasticsearch soft memlock unlimited
       elasticsearch hard memlock unlimited
 
