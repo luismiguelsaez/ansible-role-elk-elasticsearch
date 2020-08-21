@@ -19,11 +19,14 @@
   file:
     state: directory
     path: "{{ item }}"
-    recurse: False 
+    recurse: False
+    owner: elasticsearch
+    group: elasticsearch
   with_items:
     - "{{ elasticsearch_config_dir }}"
     - "{{ elasticsearch_data_dir }}"
     - "{{ elasticsearch_certificate_dir }}"
+    - "{{ elasticsearch_log_dir }}"
     - "{{ elasticsearch_snapshot_dir_host }}"
   register: dir_create
   tags:
@@ -44,6 +47,8 @@
   template:
     src: elasticsearch.j2
     dest: "{{ elasticsearch_config_dir }}/elasticsearch.yml"
+    owner: elasticsearch
+    group: elasticsearch
   register: es_config
   tags:
     - configuration
@@ -66,7 +71,7 @@
 - name: Wait for elasticsearch port to be opened
   wait_for:
     state: started
-    host: "{{ elasticsearch_network_address | default(ansible_default_ipv4) }}"
+    host: "{{ elasticsearch_network_address | default(ansible_default_ipv4.address) }}"
     port: "{{ elasticsearch_network_port }}"
     delay: 1
     timeout: 120

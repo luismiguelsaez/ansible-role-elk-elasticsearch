@@ -14,13 +14,8 @@ cluster:
       interval: {{ elasticsearch_cluster_info_update_interval }}
 
 network:
-  publish_host: {{ elasticsearch_network_address | default(ansible_default_ipv4) }}
+  publish_host: {{ elasticsearch_network_address | default(ansible_default_ipv4.address) }}
   bind_host: 0.0.0.0
-
-index:
-  unassigned:
-    node_left:
-      delayed_timeout: {{ elasticsearch_index_unassigned_node_left_delayed_timeout }}
 
 discovery:
   seed_hosts: [{% for addr in elasticsearch_cluster_network_addresses %}"{{ addr }}"{% if loop.index != elasticsearch_cluster_network_addresses|length %},{% endif %}{% endfor %}]

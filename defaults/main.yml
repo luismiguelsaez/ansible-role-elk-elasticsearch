@@ -32,8 +32,9 @@ elasticsearch_security_auth_ldap_role_mapping_file: /usr/share/elasticsearch/con
 elasticsearch_security_truststore_enabled: false
 
 elasticsearch_notification_mail_server: mailhost.net
-elasticsearch_data_dir: /var/lib/elasticsearch
+elasticsearch_data_dir: /usr/share/elasticsearch/data
 elasticsearch_config_dir: /etc/elasticsearch
+elasticsearch_log_dir: /usr/share/elasticsearch/logs
 elasticsearch_snapshot_dir_host: /usr/share/elasticsearch/snapshots
 elasticsearch_snapshot_dir_dest: /snapshots
 
