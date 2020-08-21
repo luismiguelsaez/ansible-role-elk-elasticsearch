@@ -14,7 +14,7 @@ cluster:
       interval: {{ elasticsearch_cluster_info_update_interval }}
 
 network:
-  publish_host: {{ elasticsearch_network_address }}
+  publish_host: {{ elasticsearch_network_address | default(ansible_default_ipv4) }}
   bind_host: 0.0.0.0
 
 index:

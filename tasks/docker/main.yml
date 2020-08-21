@@ -1,0 +1,61 @@
+- name: Create elasticsearch keystore
+  command: "docker run --rm -i -v {{ elasticsearch_config_dir }}:/usr/share/elasticsearch/config:rw,Z -v {{ elasticsearch_config_dir }}/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z {{ elasticsearch_docker_image }}:{{ elasticsearch_docker_tag   }} elasticsearch-keystore create"
+  args:
+    creates: "{{ elasticsearch_config_dir }}/elasticsearch.keystore"
+  register: keystore_create
+  tags:
+    - configuration
+    - files
+    - keystore
+
+- name: Add elasticsearch keystore keys
+  command: "docker run --rm -i -v {{ elasticsearch_config_dir }}:/usr/share/elasticsearch/config:rw,Z -v {{ elasticsearch_config_dir }}/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z {{ elasticsearch_docker_image }}:{{ elasticsearch_docker_tag   }} elasticsearch-keystore add --stdin bootstrap.password"
+  args:
+    stdin: "{{ elasticsearch_security_bootstrap_password }}"
+  when: keystore_create.changed
+  register: keystore_write
+  tags:
+    - configuration
+    - files
+    - keystore
+
+- name: Deploy elasticsearch containers
+  docker_container:
+    api_version: "{{ elasticsearch_docker_api_version }}"
+    state: started
+    restart: "{{ (copy_certs is defined and copy_certs.changed) or ( es_config is defined and es_config.changed) or ( keystore_create is defined and keystore_create.changed) or (kernel_params is defined and kernel_params.changed) or (kestore_write is defined and keystore_write.changed) }}"
+    name: "smd_infra_elastic"
+    user: root
+    image: "{{ elasticsearch_docker_image }}:{{ elasticsearch_docker_tag }}"
+    detach: true
+    cpu_period: "{{ elasticsearch_docker_container_cpu_period }}"
+    cpu_quota: "{{ ( elasticsearch_docker_container_cpu_period * elasticsearch_docker_container_cpu_count ) | int }}"
+    memory: "{{ elasticsearch_docker_container_memory | default( ( ansible_memtotal_mb / 2 ) | int ) }}m"
+    ulimits: 
+      - memlock:-1:-1
+      - nofile:65535:65535
+    env:
+      node.name: "{{ ansible_hostname }}"
+      ES_JAVA_OPTS: "-Xms{{ ( elasticsearch_docker_container_memory | default( ( ansible_memtotal_mb / 2 ) | int ) / 2) | int }}m -Xmx{{ (elasticsearch_docker_container_memory | default( ( ansible_memtotal_mb / 2 ) | int ) / 2) | int }}m" 
+    restart_policy: unless-stopped
+    log_driver: json-file
+    log_options:
+      max-size: '30m'
+      max-file: '3'
+    labels:
+      SERVICE_TYPE: elasticsearch 
+      SERVICE_OWNER: infra
+      SERVICE_LABEL: "{{ elasticsearch_cluster_name }}"
+    published_ports:
+      - "{{ elasticsearch_network_address }}:{{ elasticsearch_network_port }}:9200"
+      - "{{ elasticsearch_network_address }}:9300:9300"
+    volumes:
+      - "{{ elasticsearch_data_dir }}:/usr/share/elasticsearch/data/:rw,Z"
+      - "{{ elasticsearch_config_dir }}/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z"
+      - "{{ elasticsearch_config_dir }}/elasticsearch.keystore:/usr/share/elasticsearch/config/elasticsearch.keystore:ro,Z"
+      - "{{ elasticsearch_certificate_dir }}:/usr/share/elasticsearch/config/certs/:ro,Z"
+      - "{{ elasticsearch_config_dir }}/role_mapping.yml:/usr/share/elasticsearch/config/role_mapping.yml:ro,Z"
+      - "{{ elasticsearch_snapshot_dir_host }}:{{ elasticsearch_snapshot_dir_dest }}:rw"
+  register: container_deploy
+  tags:
+    - deploy

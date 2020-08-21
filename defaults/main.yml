@@ -1,5 +1,9 @@
 ---
 
+elasticsearch_vm_repo_baseurl: https://artifacts.elastic.co/packages/7.x/yum
+elasticsearch_vm_repo_gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+elasticsearch_vm_repo_packages: ["elasticsearch"," initscripts"]
+
 elasticsearch_docker_image: elasticsearch
 elasticsearch_docker_tag: 7.9.0
 
@@ -27,10 +31,10 @@ elasticsearch_security_auth_ldap_role_mapping_unmapped_groups_as_roles: 'false'
 elasticsearch_security_auth_ldap_role_mapping_file: /usr/share/elasticsearch/config/role_mapping.yml
 elasticsearch_security_truststore_enabled: false
 
-elasticsearch_notification_mail_server: mailhost.hi.inet
-elasticsearch_data_dir: /var/dockershared/elasticsearch/data
-elasticsearch_config_dir: /var/dockershared/elasticsearch/config
-elasticsearch_snapshot_dir_host: /var/dockershared/elasticsearch/snapshots
+elasticsearch_notification_mail_server: mailhost.net
+elasticsearch_data_dir: /var/lib/elasticsearch
+elasticsearch_config_dir: /etc/elasticsearch
+elasticsearch_snapshot_dir_host: /usr/share/elasticsearch/snapshots
 elasticsearch_snapshot_dir_dest: /snapshots
 
 elasticsearch_network_port: 9200

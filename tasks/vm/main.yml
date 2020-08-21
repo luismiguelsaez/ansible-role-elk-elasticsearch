@@ -1,0 +1,21 @@
+---
+
+- name: Add repository
+  yum_repository:
+    name: elasticsearch
+    description: Elasticsearch official repository
+    baseurl: "{{ elasticsearch_vm_repo_baseurl }}"
+    gpgkey: "{{ elasticsearch_vm_repo_gpgkey }}"
+    gpgcheck: True
+
+- name: Install packages
+  yum:
+    name: "{{ elasticsearch_vm_repo_packages }}"
+    state: latest
+    update_cache: True
+
+- name: Start and enable service
+  service:
+    name: elasticsearch
+    state: started
+    enabled: True
