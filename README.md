@@ -45,3 +45,10 @@ $ virtualenv -p $(which python) .venv
 $ . .venv/bin/activate
 $ pip install -r requirements.txt
 ```
+
+```
+$ molecule reset
+$ molecole converge
+$ molecule idempotence
+$ molecule destroy
+```
