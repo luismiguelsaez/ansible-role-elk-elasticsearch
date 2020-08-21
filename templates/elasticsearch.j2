@@ -1,5 +1,6 @@
 cluster:
   name: {{ elasticsearch_cluster_name }}
+{% if elasticsearch_cluster_network_addresses|length > 1 %}
   initial_master_nodes: [{% for addr in elasticsearch_cluster_hostnames %}"{{ addr }}"{% if loop.index != elasticsearch_cluster_hostnames|length %},{% endif %}{% endfor %}]
   routing:
     allocation:
@@ -12,12 +13,23 @@ cluster:
   info:
     update:
       interval: {{ elasticsearch_cluster_info_update_interval }}
+  routing:
+    allocation:
+      disk:
+        watermark:
+          low: {{ elasticsearch_cluster_routing_allocation_disk_watermark_low }}
+          high: {{ elasticsearch_cluster_routing_allocation_disk_watermark_high }}
+          flood_stage: {{ elasticsearch_cluster_routing_allocation_disk_watermark_flood_stage }}
+{% endif %}
 
 network:
   publish_host: {{ elasticsearch_network_address | default(ansible_default_ipv4.address) }}
   bind_host: 0.0.0.0
 
 discovery:
+{% if elasticsearch_cluster_network_addresses|length <= 1 %}
+  type: single-node
+{% endif %}
   seed_hosts: [{% for addr in elasticsearch_cluster_network_addresses %}"{{ addr }}"{% if loop.index != elasticsearch_cluster_network_addresses|length %},{% endif %}{% endfor %}]
 
 http.max_initial_line_length: 16kb
