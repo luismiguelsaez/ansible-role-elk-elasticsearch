@@ -36,3 +36,12 @@ Author Information
 ------------------
 
 An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+
+Testing
+-------
+
+```
+$ virtualenv -p $(which python) .venv
+$ . .venv/bin/activate
+$ pip install -r requirements.txt
+```

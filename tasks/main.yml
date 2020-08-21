@@ -34,9 +34,6 @@
 #  copy:
 #    src: "{{ elasticsearch_certificate_local_dir }}/"
 #    dest: "{{ elasticsearch_certificate_dir }}/"
-#    mode: 0440
-#    owner: "{{ elasticsearch_docker_container_user_uid }}"
-#    group: "{{ elasticsearch_docker_container_group_uid }}"
 #  register: copy_certs
 #  tags:
 #    - configuration
