@@ -22,13 +22,26 @@
       elasticsearch soft memlock unlimited
       elasticsearch hard memlock unlimited
 
+- name: Add groups
+  group:
+    name: "{{ item }}"
+  with_items: "{{ elasticsearch_group }}"
+
+- name: Add jenkins user
+  user:
+    name: "{{ elasticsearch_user }}"
+    comment: Elasticsearch execution user
+    #home: "{{ jenkins_home }}"
+    shell: /bin/false
+    groups: "{{ elasticsearch_group }}"
+
 - name: Create elasticsearch directories
   file:
     state: directory
     path: "{{ item }}"
     recurse: False
-    owner: elasticsearch
-    group: elasticsearch
+    owner: "{{ elasticsearch_user }}"
+    group: "{{ elasticsearch_group }}"
   with_items:
     - "{{ elasticsearch_config_dir }}"
     - "{{ elasticsearch_data_dir }}"
@@ -54,8 +67,8 @@
   template:
     src: elasticsearch.j2
     dest: "{{ elasticsearch_config_dir }}/elasticsearch.yml"
-    owner: elasticsearch
-    group: elasticsearch
+    owner: "{{ elasticsearch_user }}"
+    group: "{{ elasticsearch_group }}"
   register: es_config
   tags:
     - configuration

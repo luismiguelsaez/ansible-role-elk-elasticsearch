@@ -1,5 +1,8 @@
 ---
 
+elasticsearch_user: elasticsearch
+elasticsearch_group: elasticsearch
+
 elasticsearch_vm_repo_baseurl: https://artifacts.elastic.co/packages/7.x/yum
 elasticsearch_vm_repo_gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
 elasticsearch_vm_repo_packages: ["elasticsearch"," initscripts"]
@@ -43,7 +46,7 @@ elasticsearch_network_port: 9200
 elasticsearch_license_enabled: false 
 
 elasticsearch_certificate_local_dir: certificates
-elasticsearch_certificate_dir: /var/dockershared/elasticsearch/certs
+elasticsearch_certificate_dir: /usr/share/elasticsearch/certs
 elasticsearch_certificate_ca_file_key: ESca.key
 elasticsearch_certificate_ca_file_ingest: ESca.crt
 elasticsearch_certificate_ca_file_monitoring: ESMONca.crt
