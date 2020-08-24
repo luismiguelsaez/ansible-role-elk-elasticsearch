@@ -34,7 +34,9 @@ elasticsearch_security_auth_ldap_role_mapping_unmapped_groups_as_roles: 'false'
 elasticsearch_security_auth_ldap_role_mapping_file: /usr/share/elasticsearch/config/role_mapping.yml
 elasticsearch_security_truststore_enabled: false
 
-elasticsearch_notification_mail_server: mailhost.net
+elasticsearch_notification_mail_enabled: false
+elasticsearch_notification_mail_server: mail.test.net
+
 elasticsearch_data_dir: /usr/share/elasticsearch/data
 elasticsearch_config_dir: /etc/elasticsearch
 elasticsearch_log_dir: /usr/share/elasticsearch/logs
