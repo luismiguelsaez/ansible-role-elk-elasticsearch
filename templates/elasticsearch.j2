@@ -72,7 +72,7 @@ xpack:
     exporters:
       id1:
         type: http
-        host: [ {% for node in elasticsearch_monitoring_exporter_http_hosts %}"{% if elasticsearch_security_http_enabled|lower == "true" %}https{% else %}http{% endif %}://{{ node }}:{{ elasticsearch_network_port }}"{% if loop.index != elasticsearch_monitoring_hosts|length %},{% endif %}{% endfor %} ] 
+        host: [ {% for node in elasticsearch_monitoring_exporter_http_hosts %}"{% if elasticsearch_security_enabled|lower == "true" %}https{% else %}http{% endif %}://{{ node }}:{{ elasticsearch_network_port }}"{% if loop.index != elasticsearch_monitoring_hosts|length %},{% endif %}{% endfor %} ] 
         ssl:
           verification_mode: none
           certificate_authorities: [ "{{ elasticsearch_certificate_dir }}/{{ elasticsearch_certificate_ca_file_ingest }}" ]
