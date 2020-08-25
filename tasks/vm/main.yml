@@ -53,15 +53,16 @@
     - configuration
     - files
 
-#- name: Copy SSL certificates
-#  copy:
-#    src: "{{ elasticsearch_certificate_local_dir }}/"
-#    dest: "{{ elasticsearch_certificate_dir }}/"
-#  register: copy_certs
-#  tags:
-#    - configuration
-#    - files
-#    - certificates
+- name: Copy SSL certificates
+  copy:
+    src: "{{ elasticsearch_certificate_local_dir }}/"
+    dest: "{{ elasticsearch_certificate_dir }}/"
+  register: copy_certs
+  when: elasticsearch_security_enabled | bool
+  tags:
+    - configuration
+    - files
+    - certificates
 
 - name: Copy elasticsearch configuration
   template:
