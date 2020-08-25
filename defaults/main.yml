@@ -50,7 +50,7 @@ elasticsearch_network_port: 9200
 elasticsearch_license_enabled: false 
 
 elasticsearch_certificate_local_dir: certificates
-elasticsearch_certificate_dir: /usr/share/elasticsearch/certs
+elasticsearch_certificate_dir: /etc/elasticsearch/certs
 elasticsearch_certificate_ca_file_key: ESca.key
 elasticsearch_certificate_ca_file_ingest: ESca.crt
 elasticsearch_certificate_ca_file_monitoring: ESMONca.crt
