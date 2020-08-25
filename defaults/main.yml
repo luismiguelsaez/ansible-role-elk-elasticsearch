@@ -18,6 +18,8 @@ elasticsearch_docker_container_cpu_period: 100000
 elasticsearch_docker_container_cpu_quota: 0
 elasticsearch_docker_container_cpu_count: 1
 
+elasticsearch_node_name: None
+
 elasticsearch_cluster_name: clustermicro
 elasticsearch_cluster_check: false
 elasticsearch_cluster_network_addresses: []

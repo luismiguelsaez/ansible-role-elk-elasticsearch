@@ -1,5 +1,5 @@
 node:
-  name: {{ ansible_hostname }}
+  name: {{ elasticsearch_node_name | default( ansible_hostname ) }}
 
 cluster:
   name: {{ elasticsearch_cluster_name }}
