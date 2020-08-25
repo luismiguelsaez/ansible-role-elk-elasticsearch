@@ -23,7 +23,7 @@ provisioner:
     become: true
   group_vars:
     elasticsearch:
-      elasticsearch_security_enabled: False
+      elasticsearch_security_enabled: True
 
 verifier:
   name: ansible
