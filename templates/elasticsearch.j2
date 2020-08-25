@@ -34,7 +34,7 @@ thread_pool.search.queue_size: 100000
 bootstrap.memory_lock: false
 script.painless.regex.enabled: true
 
-# BASIC license requires xpack.security.http.ssl to be enabled along with xpack.security
+# BASIC license requires xpack.security.http.ssl and xpack.security.transport.ssl to be enabled along with xpack.security
 {% if elasticsearch_security_enabled|lower == "true" %}
 xpack.security.enabled: true
 xpack.security.authc.realms.native.native1.order: 0
@@ -42,8 +42,6 @@ xpack.security.http.ssl.enabled: true
 xpack.security.http.ssl.key:  {{ elasticsearch_certificate_dir }}/{{ elasticsearch_certificate_instance_file_key }} 
 xpack.security.http.ssl.certificate: {{ elasticsearch_certificate_dir }}/{{ elasticsearch_certificate_instance_file_crt }}
 xpack.security.http.ssl.certificate_authorities: [ "{{ elasticsearch_certificate_dir }}/{{ elasticsearch_certificate_ca_file_ingest }}" ]
-{% endif %}
-{% if elasticsearch_security_enabled|lower == "true" and elasticsearch_security_transport_enabled|lower == "true" %}
 xpack.security.transport.ssl.enabled: true
 xpack.security.transport.ssl.verification_mode: certificate 
 xpack.security.transport.ssl.key: {{ elasticsearch_certificate_dir }}/{{ elasticsearch_certificate_instance_file_key }}
