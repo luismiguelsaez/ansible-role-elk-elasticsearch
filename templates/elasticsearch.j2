@@ -1,6 +1,7 @@
 node:
   name: {% if elasticsearch_node_name == "none" %}"{{ ansible_hostname }}"{% else %}"{{ elasticsearch_node_name }}"{% endif %}
 
+
 cluster:
   name: {{ elasticsearch_cluster_name }}
 {% if elasticsearch_cluster_network_addresses|length > 1 %}
