@@ -33,36 +33,36 @@ thread_pool.search.queue_size: 100000
 bootstrap.memory_lock: false
 script.painless.regex.enabled: true
 
-{% if elasticsearch_security_enabled %}
+{% if elasticsearch_security_enabled is sameas true %}
 xpack.security.enabled: true
 xpack.security.authc.realms.native.native1.order: 0
 {% endif %}
-{% if elasticsearch_security_enabled and elasticsearch_security_ldap_enabled %}
+{% if elasticsearch_security_enabled is sameas true and elasticsearch_security_ldap_enabled is sameas true %}
 xpack.security.authc.realms.ldap.ldap1.order: 1
 xpack.security.authc.realms.ldap.ldap1.url: [ {% for host in elasticsearch_security_auth_ldap_hosts %}"{{ host }}"{% if loop.index != elasticsearch_security_auth_ldap_hosts|length %},{% endif %}{% endfor %} ]
 xpack.security.authc.realms.ldap.ldap1.user_search.base_dn: "{{ elasticsearch_security_auth_ldap_base_dn }}"
 xpack.security.authc.realms.ldap.ldap1.files.role_mapping: "{{ elasticsearch_security_auth_ldap_role_mapping_file }}"
 xpack.security.authc.realms.ldap.ldap1.unmapped_groups_as_roles: "{{ elasticsearch_security_auth_ldap_role_mapping_unmapped_groups_as_roles }}"
 {% endif %}
-{% if elasticsearch_security_enabled and elasticsearch_security_transport_enabled %}
+{% if elasticsearch_security_enabled is sameas true and elasticsearch_security_transport_enabled is sameas true %}
 xpack.security.transport.ssl.enabled: true
 xpack.security.transport.ssl.verification_mode: certificate 
 xpack.security.transport.ssl.key: {{ elasticsearch_certificate_dir }}/{{ elasticsearch_certificate_instance_file_key }}
 xpack.security.transport.ssl.certificate: {{ elasticsearch_certificate_dir }}/{{ elasticsearch_certificate_instance_file_crt }} 
 xpack.security.transport.ssl.certificate_authorities: [ "{{ elasticsearch_certificate_dir }}/{{ elasticsearch_certificate_ca_file_ingest }}" ]
 {% endif %}
-{% if elasticsearch_security_enabled and elasticsearch_security_http_enabled %}
+{% if elasticsearch_security_enabled is sameas true and elasticsearch_security_http_enabled is sameas true %}
 xpack.security.http.ssl.enabled: true
 xpack.security.http.ssl.key:  {{ elasticsearch_certificate_dir }}/{{ elasticsearch_certificate_instance_file_key }} 
 xpack.security.http.ssl.certificate: {{ elasticsearch_certificate_dir }}/{{ elasticsearch_certificate_instance_file_crt }}
 xpack.security.http.ssl.certificate_authorities: [ "{{ elasticsearch_certificate_dir }}/{{ elasticsearch_certificate_ca_file_ingest }}" ]
 {% endif %}
-{% if elasticsearch_notification_mail_enabled %}
+{% if elasticsearch_notification_mail_enabled is sameas true %}
 xpack.notification.email.account.default.profile: standard
 xpack.notification.email.account.default.smtp.auth: false
 xpack.notification.email.account.default.smtp.host: {{ elasticsearch_notification_mail_server }}
 {% endif %}
-{% if elasticsearch_monitoring_enabled %}
+{% if elasticsearch_monitoring_enabled is sameas true %}
 
 xpack:
   monitoring:
@@ -74,7 +74,7 @@ xpack:
     exporters:
       id1:
         type: http
-        host: [ {% for node in elasticsearch_monitoring_exporter_http_hosts %}"{% if elasticsearch_security_http_enabled %}https{% else %}http{% endif %}://{{ node }}:{{ elasticsearch_network_port }}"{% if loop.index != elasticsearch_monitoring_hosts|length %},{% endif %}{% endfor %} ] 
+        host: [ {% for node in elasticsearch_monitoring_exporter_http_hosts %}"{% if elasticsearch_security_http_enabled is sameas true %}https{% else %}http{% endif %}://{{ node }}:{{ elasticsearch_network_port }}"{% if loop.index != elasticsearch_monitoring_hosts|length %},{% endif %}{% endfor %} ] 
         ssl:
           verification_mode: none
           certificate_authorities: [ "{{ elasticsearch_certificate_dir }}/{{ elasticsearch_certificate_ca_file_ingest }}" ]
@@ -84,7 +84,7 @@ xpack:
       id2:
         type: local
 {% endif %}
-{% if elasticsearch_security_truststore_enabled %}
+{% if elasticsearch_security_truststore_enabled is sameas true %}
 
 xpack.http.ssl.truststore.path: {{ elasticsearch_certificate_dir }}/http_ssl_truststore.jks
 {% endif %}
