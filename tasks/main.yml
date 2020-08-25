@@ -113,8 +113,8 @@
   uri: 
     method: GET
     url_username: elastic
-    url_password: "{{ secrets.elasticsearch.bootstrap.password }}"
-    url: "{% if elasticsearch_security_http_enabled %}https{% else %}http{% endif %}://{{ elasticsearch_network_address }}:{{ elasticsearch_network_port }}/_cluster/health"
+    url_password: "{{ elasticsearch_security_bootstrap_password }}"
+    url: "{% if elasticsearch_security_http_enabled %}https{% else %}http{% endif %}://{{ elasticsearch_network_address | default(ansible_default_ipv4.address) }}:{{ elasticsearch_network_port }}/_cluster/health"
     remote_src: True
     return_content: True
     validate_certs: False
@@ -123,6 +123,6 @@
   until: cluster_check.status in [ 200 ] and cluster_check.json.status == "green"
   delay: 15 
   retries: 5
-  when: elasticsearch_cluster_check
+  when: elasticsearch_cluster_network_addresses|length > 1
   tags:
     - deploy
