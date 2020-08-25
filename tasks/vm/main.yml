@@ -114,6 +114,7 @@
   args:
     stdin: "{{ elasticsearch_security_bootstrap_password }}"
   #become_user: "{{ elasticsearch_user }}"
+  when: elasticsearch_security_enabled | bool
   register: keystore_write
   tags:
     - configuration
