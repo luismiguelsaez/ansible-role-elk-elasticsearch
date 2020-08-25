@@ -13,13 +13,6 @@ cluster:
   info:
     update:
       interval: {{ elasticsearch_cluster_info_update_interval }}
-  routing:
-    allocation:
-      disk:
-        watermark:
-          low: {{ elasticsearch_cluster_routing_allocation_disk_watermark_low }}
-          high: {{ elasticsearch_cluster_routing_allocation_disk_watermark_high }}
-          flood_stage: {{ elasticsearch_cluster_routing_allocation_disk_watermark_flood_stage }}
 {% endif %}
 
 network:
