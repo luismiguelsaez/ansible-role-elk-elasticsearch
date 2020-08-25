@@ -27,7 +27,7 @@
     name: "{{ item }}"
   with_items: "{{ elasticsearch_group }}"
 
-- name: Add jenkins user
+- name: Add user
   user:
     name: "{{ elasticsearch_user }}"
     comment: Elasticsearch execution user
