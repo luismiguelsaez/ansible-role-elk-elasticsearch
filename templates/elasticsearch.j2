@@ -29,6 +29,10 @@ discovery:
 {% endif %}
   seed_hosts: [{% if elasticsearch_cluster_network_addresses|length <= 1 %}"{{ ansible_default_ipv4.address }}"{% else %}{% for addr in elasticsearch_cluster_network_addresses %}"{{ addr }}"{% if loop.index != elasticsearch_cluster_network_addresses|length %},{% endif %}{% endfor %}{% endif %}]
 
+path:
+  logs: "{{ elasticsearch_logs_dir }}"
+  data: "{{ elasticsearch_data_dir }}"
+
 http.max_initial_line_length: 16kb
 thread_pool.search.queue_size: 100000
 bootstrap.memory_lock: false
