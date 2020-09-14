@@ -96,7 +96,7 @@
 
 - name: Install packages
   yum:
-    name: "{{  }}" "{{ elasticsearch_vm_repo_packages | map('regex_replace','^elasticsearch$','elasticsearch-' + elasticsearch_version + '-1' ) | list }}"
+    name: "{{ elasticsearch_vm_repo_packages | map('regex_replace','^elasticsearch$','elasticsearch-' + elasticsearch_version + '-1' ) | list }}"
     state: latest
     update_cache: True
 
