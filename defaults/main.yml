@@ -21,6 +21,7 @@ elasticsearch_docker_container_cpu_quota: 0
 elasticsearch_docker_container_cpu_count: 1
 
 elasticsearch_node_name: none
+elasticsearch_node_roles: [ data, master ]
 
 elasticsearch_cluster_name: clustermicro
 elasticsearch_cluster_check: false
