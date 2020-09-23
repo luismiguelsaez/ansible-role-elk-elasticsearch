@@ -1,5 +1,5 @@
 node:
-  name: {% if elasticsearch_node_name == "none" %}"{{ ansible_hostname }}"{% else %}"{{ elasticsearch_node_name }}"{% endif %}
+  name: {% if elasticsearch_node_name == "none" %}"{{ ansible_hostname }}"{% else %}"{{ elasticsearch_node_name }}"{% endif %}{{''}}
   roles: [{% for role in elasticsearch_node_roles %}{{ role }}{% if loop.index != elasticsearch_node_roles|length %},{% endif %}{% endfor %}]
 
 cluster:
