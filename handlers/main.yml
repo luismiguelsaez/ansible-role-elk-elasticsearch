@@ -1,2 +1,6 @@
 ---
-# handlers file for ansible-role-elk-elasticsearch
+
+- name: Restart elasticsearch service
+  service:
+    name: elasticsearch
+    state: restarted
