@@ -71,8 +71,8 @@
     owner: "{{ elasticsearch_user }}"
     group: "{{ elasticsearch_group }}"
   register: es_config
-  notify:
-    - Restart elasticsearch service
+  #notify:
+  #  - Restart elasticsearch service
   tags:
     - configuration
     - files
@@ -119,8 +119,8 @@
   #become_user: "{{ elasticsearch_user }}"
   when: elasticsearch_security_enabled | bool
   register: keystore_write
-  notify:
-    - Restart elasticsearch service
+  #notify:
+  #  - Restart elasticsearch service
   tags:
     - configuration
     - files
