@@ -4,8 +4,8 @@ node:
 
 cluster:
   name: {{ elasticsearch_cluster_name }}
-{% if elasticsearch_cluster_network_addresses|length > 1 %}
-  initial_master_nodes: [{% for addr in elasticsearch_cluster_hostnames %}"{{ addr }}"{% if loop.index != elasticsearch_cluster_hostnames|length %},{% endif %}{% endfor %}]
+{% if elasticsearch_discovery_seed_hosts|length > 1 %}
+  initial_master_nodes: [{% for addr in elasticsearch_cluster_initial_master_nodes %}"{{ addr }}"{% if loop.index != elasticsearch_cluster_initial_master_nodes|length %},{% endif %}{% endfor %}]
   routing:
     allocation:
       disk:
@@ -24,10 +24,10 @@ network:
   bind_host: 0.0.0.0
 
 discovery:
-{% if elasticsearch_cluster_network_addresses|length <= 1 %}
+{% if elasticsearch_discovery_seed_hosts|length <= 1 %}
   type: single-node
 {% endif %}
-  seed_hosts: [{% if elasticsearch_cluster_network_addresses|length <= 1 %}"{{ ansible_default_ipv4.address }}"{% else %}{% for addr in elasticsearch_cluster_network_addresses %}"{{ addr }}"{% if loop.index != elasticsearch_cluster_network_addresses|length %},{% endif %}{% endfor %}{% endif %}]
+  seed_hosts: [{% if elasticsearch_discovery_seed_hosts|length <= 1 %}"{{ ansible_default_ipv4.address }}"{% else %}{% for addr in elasticsearch_discovery_seed_hosts %}"{{ addr }}"{% if loop.index != elasticsearch_cluster_network_addresses|length %},{% endif %}{% endfor %}{% endif %}]
 
 path:
   logs: "{{ elasticsearch_log_dir }}"
