@@ -156,7 +156,7 @@
   until: cluster_check.status in [ 200 ] and cluster_check.json.status == "green"
   delay: 15 
   retries: 5
-  when: elasticsearch_cluster_network_addresses|length > 1
+  when: elasticsearch_discovery_seed_hosts|length > 1
   tags:
     - deploy
   
