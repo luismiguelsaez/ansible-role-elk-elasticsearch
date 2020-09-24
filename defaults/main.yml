@@ -28,6 +28,9 @@ elasticsearch_node_roles:
   - ml
   - remote_cluster_client
 
+elasticsearch_http_port: 9200
+elasticsearch_transport_port: 9300
+
 elasticsearch_cluster_name: clustermicro
 elasticsearch_cluster_check: false
 elasticsearch_discovery_seed_hosts: []
@@ -51,27 +54,40 @@ elasticsearch_log_dir: /usr/share/elasticsearch/logs
 elasticsearch_snapshot_dir_host: /usr/share/elasticsearch/snapshots
 elasticsearch_snapshot_dir_dest: /snapshots
 
-elasticsearch_network_port: 9200
-
 elasticsearch_license_enabled: false 
 
 elasticsearch_certificate_local_dir: certificates
 elasticsearch_certificate_dir: /etc/elasticsearch/certs
-elasticsearch_certificate_ca_file_key: ESca.key
-elasticsearch_certificate_ca_file_ingest: ESca.crt
-elasticsearch_certificate_ca_file_monitoring: ESMONca.crt
-elasticsearch_certificate_instance_file_key: instance.key 
-elasticsearch_certificate_instance_file_csr: instance.csr
-elasticsearch_certificate_instance_file_crt: instance.crt
+#elasticsearch_certificate_ca_file_key: ESca.key
+#elasticsearch_certificate_ca_file_ingest: ESca.crt
+#elasticsearch_certificate_ca_file_monitoring: ESMONca.crt
+#elasticsearch_certificate_instance_file_key: instance.key 
+#elasticsearch_certificate_instance_file_csr: instance.csr
+#elasticsearch_certificate_instance_file_crt: instance.crt
+
+### New specific variables
+elasticsearch_security_http_ssl_key: instance.key
+elasticsearch_security_http_ssl_certificate: instance.crt
+elasticsearch_security_http_ssl_certificate_authorities: ESca.crt
+
+elasticsearch_security_transport_ssl_enabled: false
+elasticsearch_security_transport_ssl_verification_mode: none
+elasticsearch_security_transport_ssl_key: instance.key
+elasticsearch_security_transport_ssl_certificate: instance.crt
+elasticsearch_security_transport_ssl_certificate_authorities: ESca.crt
+
+elasticsearch_monitoring_exporters_http_ssl_verification_mode: none
+elasticsearch_monitoring_exporters_http_ssl_certificate_authorities: ESca.crt
+elasticsearch_monitoring_exporters_http_hosts: []
+elasticsearch_monitoring_exporters_http_auth_username: none
+elasticsearch_monitoring_exporters_http_auth_password: none
+
+elasticsearch_monitoring_metricbeat_enabled: false
+###
 
 elasticsearch_force_keystore_create: false
 
 elasticsearch_monitoring_enabled: false
-
-elasticsearch_monitoring_exporter_http_hosts: []
-elasticsearch_monitoring_exporter_http_user: none
-elasticsearch_monitoring_exporter_http_pass: none
-elasticsearch_monitoring_metricbeat_enabled: false
 
 elasticsearch_index_unassigned_node_left_delayed_timeout: 5m
 
